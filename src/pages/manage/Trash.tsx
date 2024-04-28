@@ -1,50 +1,30 @@
 import React, { FC, useState } from "react";
-import { Typography, Empty, Table, Tag, Space, Button, Modal } from "antd";
+import {
+  Typography,
+  Empty,
+  Table,
+  Tag,
+  Space,
+  Button,
+  Modal,
+  Spin,
+} from "antd";
 import { useSearchParams } from "react-router-dom";
 import styles from "./common.module.scss";
 import QuestionCard from "../../component/QuestionCard";
 import { ExclamationOutlined } from "@ant-design/icons";
+import ListSearch from "../../component/ListSearch";
+import { useTitle } from "ahooks";
+import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
 const List: FC = () => {
   const [searchParams] = useSearchParams();
   const [selectedIds, setSelectedIds] = useState<String[]>([]);
   const { Title } = Typography;
   const { confirm } = Modal;
+  useTitle("回收站");
+  const { data = {}, loading } = useLoadQuestionListData({ isDeleted: true });
+  const { List = [], total = 0 } = data;
 
-  const rawQuestionList = [
-    {
-      _id: "q1",
-      title: "问卷1",
-      isPublished: false,
-      isStar: false,
-      answerCount: 5,
-      createdAt: "3月10日13:23",
-    },
-    {
-      _id: "q2",
-      title: "问卷2",
-      isPublished: true,
-      isStar: true,
-      answerCount: 3,
-      createdAt: "3月11日13:23",
-    },
-    {
-      _id: "q3",
-      title: "问卷3",
-      isPublished: false,
-      isStar: false,
-      answerCount: 4,
-      createdAt: "3月11日13:23",
-    },
-    {
-      _id: "q4",
-      title: "问卷4",
-      isPublished: true,
-      isStar: false,
-      answerCount: 2,
-      createdAt: "3月9日 13:23",
-    },
-  ];
-  const [questionList, setQuestionlist] = useState(rawQuestionList);
   const tableColumns = [
     {
       title: "标题",
@@ -89,7 +69,7 @@ const List: FC = () => {
         </Space>
       </div>
       <Table
-        dataSource={questionList}
+        dataSource={List}
         columns={tableColumns}
         pagination={false}
         rowKey={(q) => q._id}
@@ -108,11 +88,19 @@ const List: FC = () => {
         <div className={styles.left}>
           <Title level={3}>回收站</Title>
         </div>
-        <div className={styles.right}>(搜索)</div>
+        <div className={styles.right}>
+          {" "}
+          <ListSearch></ListSearch>
+        </div>
       </div>
       <div className={styles.content}>
-        {rawQuestionList.length === 0 && <Empty description="暂无数据"></Empty>}
-        {questionList.length > 0 && TableElem}
+        {loading && (
+          <div style={{ textAlign: "center" }}>
+            <Spin></Spin>
+          </div>
+        )}
+        {List.length === 0 && <Empty description="暂无数据"></Empty>}
+        {List.length > 0 && TableElem}
       </div>
       <div className={styles.footer}>分页</div>;
     </>

@@ -1,11 +1,16 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Typography } from "antd";
 import { MANAGE_INDEX_PATH } from "../router";
 import styles from "./Home.module.scss";
+import "../_mock/index";
+import axios from "axios";
 const Home: FC = () => {
   const { Title, Paragraph } = Typography;
   const nav = useNavigate();
+  useEffect(() => {
+    axios.get("/api/test").then((data) => console.log("fetch data", data));
+  }, []);
   return (
     <div>
       <div>
