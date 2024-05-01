@@ -3,6 +3,8 @@ type searchOption = {
   keyword: string;
   isStar: boolean;
   isDeleted: boolean;
+  page: number;
+  pageNumber: number;
 };
 export async function getQuestionService(id: string): Promise<ResDataType> {
   const url = "/api/question/${id}";

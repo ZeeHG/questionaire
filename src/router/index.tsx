@@ -76,3 +76,12 @@ export const LOGIN_PATH = "/login";
 export const REGISTER_PATH = "/register";
 export const HOME_PATH = "/home";
 export const MANAGE_INDEX_PATH = "/manage/list";
+
+export const isLoginOrRegsiter = (pathname: string) => {
+  if ([LOGIN_PATH, REGISTER_PATH].includes(pathname)) return true;
+  return false;
+};
+export const isNoNeedUserIfo = (pathname: string) => {
+  if ([LOGIN_PATH, REGISTER_PATH, HOME_PATH].includes(pathname)) return true;
+  return false;
+};
