@@ -14,6 +14,7 @@ import styles from "./common.module.scss";
 import QuestionCard from "../../component/QuestionCard";
 import { ExclamationOutlined } from "@ant-design/icons";
 import ListSearch from "../../component/ListSearch";
+import ListPage from "../../component/ListPage";
 import { useTitle } from "ahooks";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
 const List: FC = () => {
@@ -102,7 +103,9 @@ const List: FC = () => {
         {List.length === 0 && <Empty description="暂无数据"></Empty>}
         {List.length > 0 && TableElem}
       </div>
-      <div className={styles.footer}>分页</div>;
+      <div className={styles.footer}>
+        <ListPage total={total} />
+      </div>
     </>
   );
 };

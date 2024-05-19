@@ -1,9 +1,10 @@
 import React, { FC } from "react";
-import { Empty, Typography, Spin } from "antd";
+import { Empty, Typography, Spin, Pagination } from "antd";
 import { useSearchParams } from "react-router-dom";
 import styles from "./common.module.scss";
 import QuestionCard from "../../component/QuestionCard";
 import ListSearch from "../../component/ListSearch";
+import ListPage from "../../component/ListPage";
 import { useTitle } from "ahooks";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
 const Star: FC = () => {
@@ -33,6 +34,9 @@ const Star: FC = () => {
             const { _id } = q;
             return <QuestionCard key={_id} {...q} />;
           })}
+      </div>
+      <div className={styles.footer}>
+        <ListPage total={total} />
       </div>
     </>
   );
